@@ -16,10 +16,9 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // Typing Animation Logic
 const roles = [
-  "Full Stack Developer",
-  "Python Systems Builder",
-  "AI-Driven Application Developer",
-  "System Architect"
+  "Developer",
+  "Problem Solver",
+  "Tech Enthusiast"
 ];
 
 let roleIndex = 0;
