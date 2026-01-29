@@ -63,9 +63,63 @@ document.addEventListener('mousemove', (e) => {
   cursorGlow.style.top = e.clientY + 'px';
 });
 
+
 // Start animations when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   if (roleElement) {
     setTimeout(type, 1000);
   }
+
+  // Navbar Logic
+  const navbar = document.querySelector('.navbar');
+  const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+  const navLinksContainer = document.querySelector('.nav-links');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('header, section');
+
+  // Handle Scroll Transparency & Active Link
+  window.addEventListener('scroll', () => {
+    // Navbar Background
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+
+    // Highlighting current section
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (window.scrollY >= sectionTop - 150) {
+        current = section.getAttribute('id') || '';
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      const href = link.getAttribute('href');
+      if (href === '#' && current === 'home') {
+        link.classList.add('active');
+      } else if (href === '#' + current && current !== '') {
+        link.classList.add('active');
+      }
+    });
+  });
+
+  // Mobile Menu Toggle
+  if (mobileNavToggle) {
+    mobileNavToggle.addEventListener('click', () => {
+      mobileNavToggle.classList.toggle('active');
+      navLinksContainer.classList.toggle('active');
+    });
+  }
+
+  // Close mobile menu when link is clicked
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNavToggle.classList.remove('active');
+      navLinksContainer.classList.remove('active');
+    });
+  });
 });
